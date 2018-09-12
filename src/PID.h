@@ -1,5 +1,6 @@
 #ifndef PID_H
 #define PID_H
+#include <vector>
 
 class PID {
 public:
@@ -16,6 +17,19 @@ public:
   double Kp;
   double Ki;
   double Kd;
+  
+  bool Initialized = false;
+  
+  unsigned long step;
+  unsigned short MaxStep;
+  
+  
+  
+  std::vector<double> P;
+  std::vector<double> dp;
+  
+  double error1;
+  double error2;
 
   /*
   * Constructor
@@ -30,7 +44,7 @@ public:
   /*
   * Initialize PID.
   */
-  void Init(double Kp, double Ki, double Kd);
+  void Init(double Kp, double Ki, double Kd, double cte);
 
   /*
   * Update the PID error variables given cross track error.
@@ -40,7 +54,11 @@ public:
   /*
   * Calculate the total PID error.
   */
-  double TotalError();
+  double TotalError(double cte);
+  
+  void UpdateParam(double &P, double &dp, unsigned long &step, double cte, double &error1, double &error2,double best_err);
 };
+
+  
 
 #endif /* PID_H */
