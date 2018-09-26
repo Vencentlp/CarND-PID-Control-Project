@@ -1,6 +1,7 @@
 #ifndef PID_H
 #define PID_H
 #include <vector>
+#include <iostream>
 
 class PID {
 public:
@@ -18,10 +19,13 @@ public:
   double Ki;
   double Kd;
   
-  bool Initialized = false;
+  bool Initialized;
   
   unsigned long step;
-  unsigned short MaxStep;
+  unsigned short MaxSettleStep;
+  unsigned short MaxEvalStep;
+  bool twiddle;
+  double sum_error;
   
   
   
@@ -30,6 +34,12 @@ public:
   
   double error1;
   double error2;
+  double best_err;
+  
+  int ChangeCoee;
+  
+  //double error1;
+  //double error2;
 
   /*
   * Constructor
@@ -44,7 +54,7 @@ public:
   /*
   * Initialize PID.
   */
-  void Init(double Kp, double Ki, double Kd, double cte);
+  void Init(double Kp, double Ki, double Kd);
 
   /*
   * Update the PID error variables given cross track error.
@@ -54,9 +64,9 @@ public:
   /*
   * Calculate the total PID error.
   */
-  double TotalError(double cte);
+  double TotalError();
   
-  void UpdateParam(double &P, double &dp, unsigned long &step, double cte, double &error1, double &error2,double best_err);
+  void UpdateParam(double &P, double &dp, unsigned long &step, double cte);
 };
 
   
