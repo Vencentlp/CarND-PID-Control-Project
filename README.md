@@ -2,6 +2,15 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+## Introfuction
+This project it to build a PID controller to control the car steering and make the car drive smoothly on the road. The simulator can provide the cross track error(cte),speed, and steering angle data via local websocket. The controller must control the steering angle to drive the car in the road safly according to cte.
+
+## Discusion
+* Describe the effect each of the P, I, D components had in your implementation.
+In this project, P is the proportion part of the PID controller. It can influence the car's behavior obviously. The output of the P part is proportional to the cte. So if there is large distance of the car from middle of the road, there the P part will cause large steering angle to make the car steer left quickly. If the car slightly drive left off the middle of the road, then the P part will control the car slightly drive to the right side. So it has a quick effect on the car. If the P part is too high, the car will swing violently. If the P part is too low the car will be not sensitive to the error.
+
+
+
 
 ## Dependencies
 
