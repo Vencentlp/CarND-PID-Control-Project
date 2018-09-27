@@ -33,20 +33,21 @@ void PID::Init(double Kp, double Ki, double Kd)
 
 void PID::UpdateError(double cte) 
 {
-    
+    //Initialize p error
     if (!Initialized)
     {
         p_error = cte;
         Initialized = true;
     }
+    // p,i,d error calculation
     d_error = cte - p_error;
     p_error = cte;
     i_error = i_error + cte; 
     
+    //twiddle tolerence 
     double tol = 0.00001;    
-    //double best_err = 1000.0;
     
-    
+    // Twiddle process
     if (twiddle)
     {
         step++;
@@ -61,12 +62,12 @@ void PID::UpdateError(double cte)
             
         }
         
+        //ChangeCoee is the flag to switch the twiddle parameter
         if (step == 0)
         {
             ChangeCoee ++;
             ChangeCoee = ChangeCoee % 3;
         }
-        
         
         
         step = step % (2* (MaxEvalStep + MaxSettleStep));
@@ -83,16 +84,13 @@ void PID::UpdateError(double cte)
 
 void PID::UpdateParam(double &P, double &dp, unsigned long &step, double cte)
 {
-    
-      
-    
-    
+    //Define the cycle stepes   
     unsigned long stepchek1 = MaxSettleStep;
     unsigned long stepchek2 = MaxSettleStep + MaxEvalStep;
     unsigned long stepchek3 = MaxSettleStep*2 + MaxEvalStep;
     unsigned long stepchek4 = MaxSettleStep*2 + MaxEvalStep*2;
     std::cout<< " stepceck1 "<<stepchek1<< " stepchek2 "<< stepchek2<<" stepcheck3 "<<stepchek3<< " stepchek4 " << stepchek4<<std::endl;
-    
+    //Twiddle process
     if (step == 1) {P += dp; std::cout<<"First Add"<<std::endl;}
     if ((step > stepchek1) & (step <= stepchek2))
     {
@@ -160,7 +158,7 @@ void PID::UpdateParam(double &P, double &dp, unsigned long &step, double cte)
     
 
 
-
+//Calculate total error to update the steering value 
 double PID::TotalError() 
 {
     double pid_error = -P[0]*p_error - P[1]*i_error - P[2]*d_error;
