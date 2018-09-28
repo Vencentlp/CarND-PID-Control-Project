@@ -16,7 +16,8 @@ D is the 'differential' part, it is proportional to the differential of cte. It 
 
 
 * Describe how the final hyperparameters were chosen.
-Firstly, I manually tune the parameters 
+
+Firstly, I manually tune the parameters and make a good start for the twiddle method to automatically tune the parameters. A good start for the 'twiddle' will reduce the calculation time obviously. The 'twiddle' method is the same with the method in class. When one paramter is changed, the error will be calculated after 100 steps to make the car settle down. The error will be accumulated and averaged during next 2000 steps. The simulator will be reset after 2100 steps. And the modification to make the error smaller will be kept. The twiddle process will be finished after the sum of PID's changing step value is smaller than the tolerance.
 
 
 ## Dependencies
